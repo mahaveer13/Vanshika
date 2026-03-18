@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forever?</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #ffe6eb, #fff);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .card {
+        width: 90%;
+        max-width: 360px;
+        background: white;
+        padding: 30px 20px;
+        border-radius: 22px;
+        text-align: center;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        position: relative;
+    }
+
+    h1 {
+        font-size: 22px;
+        margin-bottom: 25px;
+    }
+
+    .buttons {
+        position: relative;
+        height: 140px;
+    }
+
+    button {
+        padding: 12px 28px;
+        font-size: 16px;
+        border-radius: 30px;
+        border: none;
+        cursor: pointer;
+        position: absolute;
+    }
+
+    #yes {
+        background: #ff4d6d;
+        color: white;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%);
+    }
+
+    #no {
+        background: #e0e0e0;
+        color: #333;
+        left: 10px;
+        top: 0;
+    }
+
+    .love-page img {
+        width: 100%;
+        border-radius: 20px;
+        margin-bottom: 20px;
+    }
+
+    .love-page h2 {
+        color: #ff4d6d;
+    }
+
+    .love-page p {
+        font-size: 16px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="card" id="mainCard">
+    <h1>Vanshika, will you be my forever? 💖</h1>
+
+    <div class="buttons">
+        <button id="yes">Yes 💕</button>
+        <button id="no">No 🙈</button>
+    </div>
+</div>
+
+<script>
+    const noBtn = document.getElementById("no");
+    const card = document.querySelector(".card");
+
+    function moveNoButton() {
+        const maxX = card.clientWidth - noBtn.clientWidth - 10;
+        const maxY = card.clientHeight - noBtn.clientHeight - 10;
+
+        noBtn.style.left = Math.random() * maxX + "px";
+        noBtn.style.top = Math.random() * maxY + "px";
+    }
+
+    noBtn.addEventListener("mouseover", moveNoButton);
+    noBtn.addEventListener("touchstart", moveNoButton);
+
+    document.getElementById("yes").addEventListener("click", () => {
+        document.getElementById("mainCard").innerHTML = `
+            <div class="love-page">
+                <img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Love Gif">
+                <h2>Yayyy! 💍❤️</h2>
+                <p>
+                    You just made my heart the happiest place ever 🥹💖  
+                    Forever starts now… with you 💫
+                </p>
+            </div>
+        `;
+    });
+</script>
+
+</body>
+</html>
