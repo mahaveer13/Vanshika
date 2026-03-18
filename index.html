@@ -44,7 +44,6 @@
         border: none;
         cursor: pointer;
         position: absolute;
-        transition: 0.2s;
     }
 
     #yes {
@@ -104,14 +103,14 @@
     noBtn.addEventListener("mouseover", moveNoButton);
     noBtn.addEventListener("touchstart", moveNoButton);
 
+    // 🔥 YOUR GIFs (as requested)
     const gifs = [
         "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjMyaDBnaThkZG56cm4yZTlrbjV0bXdmZ2twN2U1YmJidHI1NmdieiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/fvN5KrNcKKUyX7hNIA/giphy.gif",
-        "https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif",
-        "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"
+        "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjMyaDBnaThkZG56cm4yZTlrbjV0bXdmZ2twN2U1YmJidHI1NmdieiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/fvN5KrNcKKUyX7hNIA/giphy.gif",
+        "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjMyaDBnaThkZG56cm4yZTlrbjV0bXdmZ2twN2U1YmJidHI1NmdieiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/fvN5KrNcKKUyX7hNIA/giphy.gif"
     ];
 
     let gifIndex = 0;
-    let gifInterval;
 
     document.getElementById("yes").addEventListener("click", () => {
         document.getElementById("mainCard").innerHTML = `
@@ -125,7 +124,7 @@
             </div>
         `;
 
-        gifInterval = setInterval(() => {
+        setInterval(() => {
             gifIndex = (gifIndex + 1) % gifs.length;
             document.getElementById("loveGif").src = gifs[gifIndex];
         }, 3000);
