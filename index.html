@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Forever?</title>
+<title>Forever ❤️</title>
 
 <style>
     body {
@@ -44,6 +44,7 @@
         border: none;
         cursor: pointer;
         position: absolute;
+        transition: 0.2s;
     }
 
     #yes {
@@ -63,8 +64,8 @@
 
     .love-page img {
         width: 100%;
-        border-radius: 20px;
-        margin-bottom: 20px;
+        border-radius: 18px;
+        margin-bottom: 18px;
     }
 
     .love-page h2 {
@@ -103,10 +104,19 @@
     noBtn.addEventListener("mouseover", moveNoButton);
     noBtn.addEventListener("touchstart", moveNoButton);
 
+    const gifs = [
+        "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif",
+        "https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif",
+        "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"
+    ];
+
+    let gifIndex = 0;
+    let gifInterval;
+
     document.getElementById("yes").addEventListener("click", () => {
         document.getElementById("mainCard").innerHTML = `
             <div class="love-page">
-                <img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Love Gif">
+                <img id="loveGif" src="${gifs[0]}">
                 <h2>Yayyy! 💍❤️</h2>
                 <p>
                     You just made my heart the happiest place ever 🥹💖  
@@ -114,6 +124,11 @@
                 </p>
             </div>
         `;
+
+        gifInterval = setInterval(() => {
+            gifIndex = (gifIndex + 1) % gifs.length;
+            document.getElementById("loveGif").src = gifs[gifIndex];
+        }, 3000);
     });
 </script>
 
