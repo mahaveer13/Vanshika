@@ -92,7 +92,7 @@ button {
 
 <div class="card" id="mainCard">
 
-    <!-- 💖 FIRST PAGE GIF (YOUR CHOICE) -->
+    <!-- 💖 FIRST PAGE GIF -->
     <img class="intro-gif"
          src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3cGh5ZGFycml2N3d6am81NjVjNmtudGZnOHV1NzFqNmR6aHBpMmxudyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/49Y8rikUtEyoX0iU7h/giphy.gif"
          alt="Cute Love">
@@ -110,7 +110,12 @@ const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
 const box = document.getElementById("buttonBox");
 
-// 🚀 Fast + smart NO button movement
+// 기억 last position
+let lastX = -1000;
+let lastY = -1000;
+const MIN_DISTANCE = 80;
+
+// 🚀 FAST + SMART NO BUTTON
 function moveNoButtonFast() {
     const boxRect = box.getBoundingClientRect();
     const yesRect = yesBtn.getBoundingClientRect();
@@ -122,7 +127,12 @@ function moveNoButtonFast() {
         x = Math.random() * (box.clientWidth - noBtn.offsetWidth);
         y = Math.random() * (box.clientHeight - noBtn.offsetHeight);
 
-        // Check distance from YES button
+        // distance from last position
+        const dx = x - lastX;
+        const dy = y - lastY;
+        const distanceFromLast = Math.sqrt(dx * dx + dy * dy);
+
+        // no overlap with YES
         const noRect = {
             left: boxRect.left + x,
             top: boxRect.top + y,
@@ -130,29 +140,34 @@ function moveNoButtonFast() {
             bottom: boxRect.top + y + noBtn.offsetHeight
         };
 
-        safe =
+        const farFromYes =
             noRect.right < yesRect.left - 10 ||
             noRect.left > yesRect.right + 10 ||
             noRect.bottom < yesRect.top - 10 ||
             noRect.top > yesRect.bottom + 10;
+
+        safe = farFromYes && distanceFromLast > MIN_DISTANCE;
     }
+
+    lastX = x;
+    lastY = y;
 
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
 }
 
-// Move FAST (before click)
+// move BEFORE click
 noBtn.addEventListener("mouseover", moveNoButtonFast);
 noBtn.addEventListener("touchstart", moveNoButtonFast);
 
-// 💖 YES CLICK → SECOND PAGE
-document.getElementById("yes").addEventListener("click", () => {
+// 💖 YES CLICK → FINAL PAGE
+yesBtn.addEventListener("click", () => {
     document.getElementById("mainCard").innerHTML = `
         <div class="love-page">
             <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3MXAzaDJxZjZkNjl1Z3J2NmxkemRjaXFvZnljYzA1eGl1YWI4dGN1NiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/f9EmXxglhdhAj1bo28/giphy.gif">
             <h2>Yayyy! 💍❤️</h2>
             <p>
-             You just made my heart the happiest place ever 🥹💖<br>
+                You just made my heart the happiest place ever 🥹💖<br>
                 Forever starts now… with you 💫
             </p>
         </div>
