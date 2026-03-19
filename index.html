@@ -20,16 +20,22 @@
         width: 90%;
         max-width: 360px;
         background: white;
-        padding: 30px 20px;
+        padding: 25px 20px;
         border-radius: 22px;
         text-align: center;
         box-shadow: 0 15px 35px rgba(0,0,0,0.15);
         position: relative;
     }
 
+    .intro-gif {
+        width: 100%;
+        border-radius: 18px;
+        margin-bottom: 18px;
+    }
+
     h1 {
-        font-size: 22px;
-        margin-bottom: 25px;
+        font-size: 21px;
+        margin-bottom: 20px;
     }
 
     .buttons {
@@ -80,6 +86,13 @@
 <body>
 
 <div class="card" id="mainCard">
+    <!-- 💖 Cute first page GIF -->
+    <img 
+      class="intro-gif"
+      src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"
+      alt="Cute Love Gif"
+    >
+
     <h1>Vanshika, will you be my forever? 💖</h1>
 
     <div class="buttons">
@@ -103,7 +116,7 @@
     noBtn.addEventListener("mouseover", moveNoButton);
     noBtn.addEventListener("touchstart", moveNoButton);
 
-    // 🔥 YOUR GIFs (as requested)
+    // 💕 GIFs for YES page (your choice)
     const gifs = [
         "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjMyaDBnaThkZG56cm4yZTlrbjV0bXdmZ2twN2U1YmJidHI1NmdieiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/fvN5KrNcKKUyX7hNIA/giphy.gif",
         "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjMyaDBnaThkZG56cm4yZTlrbjV0bXdmZ2twN2U1YmJidHI1NmdieiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/fvN5KrNcKKUyX7hNIA/giphy.gif",
