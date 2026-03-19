@@ -2,16 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Forever ❤️</title>
 
 <style>
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 html, body {
@@ -24,11 +22,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #ffe6eb, #ffffff);
+    background: linear-gradient(135deg, #ffe6eb, #fff);
     font-family: 'Segoe UI', sans-serif;
 }
 
-/* CARD */
 .card {
     width: 100%;
     max-width: 360px;
@@ -36,7 +33,7 @@ body {
     max-height: 640px;
     background: white;
     border-radius: 22px;
-    padding: 18px;
+    padding: 20px;
     text-align: center;
     box-shadow: 0 15px 35px rgba(0,0,0,0.15);
     display: flex;
@@ -44,27 +41,23 @@ body {
     justify-content: space-between;
 }
 
-/* FIRST PAGE GIF */
 .intro-gif {
     width: 220px;
-    margin: 10px auto 5px;
+    margin: 10px auto;
 }
 
-/* TEXT */
 h1 {
     font-size: 20px;
-    margin: 8px 0;
+    margin: 10px 0;
 }
 
-/* BUTTON AREA */
 .buttons {
     position: relative;
+    height: 160px;
     width: 100%;
-    height: 170px;
     overflow: hidden;
 }
 
-/* BUTTONS */
 button {
     padding: 12px 26px;
     font-size: 16px;
@@ -72,10 +65,8 @@ button {
     border: none;
     cursor: pointer;
     position: absolute;
-    user-select: none;
 }
 
-/* YES */
 #yes {
     background: #ff4d6d;
     color: white;
@@ -85,7 +76,6 @@ button {
     z-index: 2;
 }
 
-/* NO */
 #no {
     background: #e0e0e0;
     color: #333;
@@ -94,7 +84,6 @@ button {
     z-index: 1;
 }
 
-/* SECOND PAGE */
 .love-page {
     height: 100%;
     display: flex;
@@ -128,7 +117,7 @@ button {
     <!-- FIRST PAGE GIF -->
     <img class="intro-gif"
          src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3cGh5ZGFycml2N3d6am81NjVjNmtudGZnOHV1NzFqNmR6aHBpMmxudyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/49Y8rikUtEyoX0iU7h/giphy.gif"
-         alt="Cute Love">
+         alt="Love">
 
     <h1>Vanshika, will you be my forever? 💖</h1>
 
@@ -144,8 +133,7 @@ const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
 const box = document.getElementById("box");
 
-const MIN_DISTANCE = 280; // ≈ 7 cm
-
+// 🔥 SUPER FAST + SAFE MOVE
 function moveNoButton() {
     const boxW = box.clientWidth;
     const boxH = box.clientHeight;
@@ -155,35 +143,36 @@ function moveNoButton() {
     const yesRect = yesBtn.getBoundingClientRect();
     const boxRect = box.getBoundingClientRect();
 
-    let x, y, distance;
+    let x, y, safe = false;
 
-    do {
+    while (!safe) {
         x = Math.random() * (boxW - noW);
         y = Math.random() * (boxH - noH);
 
-        const noCenterX = boxRect.left + x + noW / 2;
-        const noCenterY = boxRect.top + y + noH / 2;
+        const noRect = {
+            left: boxRect.left + x,
+            right: boxRect.left + x + noW,
+            top: boxRect.top + y,
+            bottom: boxRect.top + y + noH
+        };
 
-        const yesCenterX = yesRect.left + yesRect.width / 2;
-        const yesCenterY = yesRect.top + yesRect.height / 2;
-
-        distance = Math.hypot(
-            noCenterX - yesCenterX,
-            noCenterY - yesCenterY
-        );
-
-    } while (distance < MIN_DISTANCE);
+        safe =
+            noRect.right < yesRect.left - 15 ||
+            noRect.left > yesRect.right + 15 ||
+            noRect.bottom < yesRect.top - 15 ||
+            noRect.top > yesRect.bottom + 15;
+    }
 
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
 }
 
-/* Trigger BEFORE click */
-["mouseenter", "touchstart", "touchmove"].forEach(event => {
-    noBtn.addEventListener(event, moveNoButton);
+// Trigger BEFORE click (mobile + desktop)
+["mouseenter", "touchstart", "touchmove"].forEach(evt => {
+    noBtn.addEventListener(evt, moveNoButton);
 });
 
-/* YES CLICK */
+// YES CLICK → SECOND PAGE
 yesBtn.addEventListener("click", () => {
     document.getElementById("mainCard").innerHTML = `
         <div class="love-page">
