@@ -6,81 +6,83 @@
 <title>Forever ❤️</title>
 
 <style>
-    * { box-sizing: border-box; }
+* { box-sizing: border-box; }
 
-    body {
-        margin: 0;
-        height: 100vh;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(135deg, #ffe6eb, #fff);
-        font-family: 'Segoe UI', sans-serif;
-    }
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ffe6eb, #fff);
+    font-family: 'Segoe UI', sans-serif;
+}
 
-    .card {
-        width: 90%;
-        max-width: 340px;
-        background: white;
-        padding: 20px;
-        border-radius: 22px;
-        text-align: center;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-    }
+.card {
+    width: 90%;
+    max-width: 340px;
+    background: white;
+    padding: 20px;
+    border-radius: 22px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
 
-    .intro-gif {
-        width: 180px;
-        margin: 0 auto 12px;
-        display: block;
-    }
+.intro-gif {
+    width: 180px;
+    margin: 0 auto 12px;
+    display: block;
+}
 
-    h1 {
-        font-size: 20px;
-        margin-bottom: 18px;
-    }
+h1 {
+    font-size: 20px;
+    margin-bottom: 18px;
+}
 
-    .buttons {
-        position: relative;
-        height: 120px;
-        width: 100%;
-        overflow: hidden; /* 🔒 keep No inside */
-    }
+.buttons {
+    position: relative;
+    height: 120px;
+    width: 100%;
+    overflow: hidden;
+}
 
-    button {
-        padding: 12px 26px;
-        font-size: 16px;
-        border-radius: 30px;
-        border: none;
-        cursor: pointer;
-        position: absolute;
-        white-space: nowrap;
-    }
+button {
+    padding: 12px 26px;
+    font-size: 16px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    white-space: nowrap;
+}
 
-    #yes {
-        background: #ff4d6d;
-        color: white;
-        left: 50%;
-        bottom: 0;
-        transform: translateX(-50%);
-    }
+#yes {
+    background: #ff4d6d;
+    color: white;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+}
 
-    #no {
-        background: #e0e0e0;
-        color: #333;
-        left: 10px;
-        top: 0;
-    }
+#no {
+    background: #e0e0e0;
+    color: #333;
+    left: 10px;
+    top: 0;
+}
 
-    .love-page img {
-        width: 100%;
-        max-height: 220px;
-        object-fit: contain;
-        border-radius: 16px;
-        margin-bottom: 14px;
-    }
+.love-page img {
+    width: 100%;
+    max-height: 220px;
+    object-fit: contain;
+    border-radius: 16px;
+    margin-bottom: 14px;
+}
 
-    .love-page h2 { color: #ff4d6d; }
+.love-page h2 {
+    color: #ff4d6d;
+}
 </style>
 </head>
 
@@ -88,9 +90,10 @@
 
 <div class="card" id="mainCard">
 
+    <!-- 💖 FIRST PAGE GIF (Your exact GIF) -->
     <img class="intro-gif"
-         src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZzR5emN2dXdzc2V2Y3V3OHlrdTB6MW9pMnhqZWl5MGh0cmw1dmV4dCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/kfRKF0iqA8jyDqq1nH/giphy.gif"
-         alt="Cute Love Sticker">
+         src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3cGh5ZGFycml2N3d6am81NjVjNmtudGZnOHV1NzFqNmR6aHBpMmxudyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/49Y8rikUtEyoX0iU7h/giphy.gif"
+         alt="Cute Love Gif">
 
     <h1>Vanshika, will you be my forever? 💖</h1>
 
@@ -101,45 +104,57 @@
 </div>
 
 <script>
-    const noBtn = document.getElementById("no");
-    const box = document.getElementById("buttonBox");
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const box = document.getElementById("buttonBox");
 
-    function moveNoButton() {
-        const maxX = box.clientWidth - noBtn.offsetWidth;
-        const maxY = box.clientHeight - noBtn.offsetHeight;
+function isOverlapping(x, y) {
+    const yesRect = yesBtn.getBoundingClientRect();
+    const boxRect = box.getBoundingClientRect();
 
-        const x = Math.random() * maxX;
-        const y = Math.random() * maxY;
+    const noRect = {
+        left: boxRect.left + x,
+        top: boxRect.top + y,
+        right: boxRect.left + x + noBtn.offsetWidth,
+        bottom: boxRect.top + y + noBtn.offsetHeight
+    };
 
-        noBtn.style.left = `${x}px`;
-        noBtn.style.top = `${y}px`;
-    }
+    return !(
+        noRect.right < yesRect.left ||
+        noRect.left > yesRect.right ||
+        noRect.bottom < yesRect.top ||
+        noRect.top > yesRect.bottom
+    );
+}
 
-    noBtn.addEventListener("mouseover", moveNoButton);
-    noBtn.addEventListener("touchstart", moveNoButton);
+function moveNoButton() {
+    const maxX = box.clientWidth - noBtn.offsetWidth;
+    const maxY = box.clientHeight - noBtn.offsetHeight;
 
-    const gifs = [
-        "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjMyaDBnaThkZG56cm4yZTlrbjV0bXdmZ2twN2U1YmJidHI1NmdieiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/fvN5KrNcKKUyX7hNIA/giphy.gif",
-        "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjMyaDBnaThkZG56cm4yZTlrbjV0bXdmZ2twN2U1YmJidHI1NmdieiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/fvN5KrNcKKUyX7hNIA/giphy.gif",
-        "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjMyaDBnaThkZG56cm4yZTlrbjV0bXdmZ2twN2U1YmJidHI1NmdieiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/fvN5KrNcKKUyX7hNIA/giphy.gif"
-    ];
+    let x, y, tries = 0;
 
-    let gifIndex = 0;
+    do {
+        x = Math.random() * maxX;
+        y = Math.random() * maxY;
+        tries++;
+    } while (isOverlapping(x, y) && tries < 50);
 
-    document.getElementById("yes").addEventListener("click", () => {
-        document.getElementById("mainCard").innerHTML = `
-            <div class="love-page">
-                <img id="loveGif" src="${gifs[0]}">
-                <h2>Yayyy! 💍❤️</h2>
-                <p>Forever starts now… with you 💫</p>
-            </div>
-        `;
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
+}
 
-        setInterval(() => {
-            gifIndex = (gifIndex + 1) % gifs.length;
-            document.getElementById("loveGif").src = gifs[gifIndex];
-        }, 3000);
-    });
+noBtn.addEventListener("mouseover", moveNoButton);
+noBtn.addEventListener("touchstart", moveNoButton);
+
+document.getElementById("yes").addEventListener("click", () => {
+    document.getElementById("mainCard").innerHTML = `
+        <div class="love-page">
+            <img src="https://tenor.com/tRwPQC2BfFI.gif" alt="Love Gif">
+            <h2>Yayyy! 💍❤️</h2>
+            <p>Forever starts now… with you 💫</p>
+        </div>
+    `;
+});
 </script>
 
 </body>
