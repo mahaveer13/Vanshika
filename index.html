@@ -15,7 +15,7 @@
 html, body {
     width: 100%;
     height: 100%;
-    overflow: hidden; /* 🚫 NO SCROLL */
+    overflow: hidden;
 }
 
 body {
@@ -82,6 +82,7 @@ button {
     top: 10px;
     left: 10px;
     z-index: 1;
+    transition: all 0.2s ease;
 }
 
 .love-page {
@@ -114,7 +115,6 @@ button {
 
 <div class="card" id="mainCard">
 
-    <!-- FIRST PAGE GIF -->
     <img class="intro-gif"
          src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3cGh5ZGFycml2N3d6am81NjVjNmtudGZnOHV1NzFqNmR6aHBpMmxudyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/49Y8rikUtEyoX0iU7h/giphy.gif"
          alt="Love">
@@ -133,46 +133,48 @@ const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
 const box = document.getElementById("box");
 
-// 🔥 SUPER FAST + SAFE MOVE
+let lastX = 0;
+let lastY = 0;
+let scale = 1;
+
 function moveNoButton() {
     const boxW = box.clientWidth;
     const boxH = box.clientHeight;
     const noW = noBtn.offsetWidth;
     const noH = noBtn.offsetHeight;
 
-    const yesRect = yesBtn.getBoundingClientRect();
-    const boxRect = box.getBoundingClientRect();
+    const MIN_DISTANCE = 260; // ~7cm
 
-    let x, y, safe = false;
+    let x, y, distance = 0;
 
-    while (!safe) {
+    while (distance < MIN_DISTANCE) {
         x = Math.random() * (boxW - noW);
         y = Math.random() * (boxH - noH);
 
-        const noRect = {
-            left: boxRect.left + x,
-            right: boxRect.left + x + noW,
-            top: boxRect.top + y,
-            bottom: boxRect.top + y + noH
-        };
-
-        safe =
-            noRect.right < yesRect.left - 15 ||
-            noRect.left > yesRect.right + 15 ||
-            noRect.bottom < yesRect.top - 15 ||
-            noRect.top > yesRect.bottom + 15;
+        distance = Math.sqrt(
+            Math.pow(x - lastX, 2) + Math.pow(y - lastY, 2)
+        );
     }
+
+    lastX = x;
+    lastY = y;
 
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
+
+    // Shrink effect
+    scale *= 0.9;
+    if (scale < 0.4) scale = 0.4;
+
+    noBtn.style.transform = `scale(${scale})`;
 }
 
-// Trigger BEFORE click (mobile + desktop)
+// Trigger movement
 ["mouseenter", "touchstart", "touchmove"].forEach(evt => {
     noBtn.addEventListener(evt, moveNoButton);
 });
 
-// YES CLICK → SECOND PAGE
+// YES CLICK
 yesBtn.addEventListener("click", () => {
     document.getElementById("mainCard").innerHTML = `
         <div class="love-page">
