@@ -6,14 +6,12 @@
 <title>Forever ❤️</title>
 
 <style>
-    * {
-        box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
         margin: 0;
         height: 100vh;
-        overflow: hidden; /* 🚫 NO SCROLL */
+        overflow: hidden;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -29,12 +27,10 @@
         border-radius: 22px;
         text-align: center;
         box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-        position: relative;
     }
 
     .intro-gif {
         width: 180px;
-        height: auto;
         margin: 0 auto 12px;
         display: block;
     }
@@ -47,6 +43,8 @@
     .buttons {
         position: relative;
         height: 120px;
+        width: 100%;
+        overflow: hidden; /* 🔒 keep No inside */
     }
 
     button {
@@ -56,6 +54,7 @@
         border: none;
         cursor: pointer;
         position: absolute;
+        white-space: nowrap;
     }
 
     #yes {
@@ -81,15 +80,7 @@
         margin-bottom: 14px;
     }
 
-    .love-page h2 {
-        color: #ff4d6d;
-        margin-bottom: 8px;
-    }
-
-    .love-page p {
-        font-size: 15px;
-        margin: 0;
-    }
+    .love-page h2 { color: #ff4d6d; }
 </style>
 </head>
 
@@ -97,16 +88,13 @@
 
 <div class="card" id="mainCard">
 
-    <!-- 💖 Cute Sticker GIF (First Page) -->
-    <img
-      class="intro-gif"
-      src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZzR5emN2dXdzc2V2Y3V3OHlrdTB6MW9pMnhqZWl5MGh0cmw1dmV4dCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/kfRKF0iqA8jyDqq1nH/giphy.gif"
-      alt="Cute Love Sticker"
-    >
+    <img class="intro-gif"
+         src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZzR5emN2dXdzc2V2Y3V3OHlrdTB6MW9pMnhqZWl5MGh0cmw1dmV4dCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/kfRKF0iqA8jyDqq1nH/giphy.gif"
+         alt="Cute Love Sticker">
 
     <h1>Vanshika, will you be my forever? 💖</h1>
 
-    <div class="buttons">
+    <div class="buttons" id="buttonBox">
         <button id="yes">Yes 💕</button>
         <button id="no">No 🙈</button>
     </div>
@@ -114,14 +102,17 @@
 
 <script>
     const noBtn = document.getElementById("no");
-    const card = document.querySelector(".card");
+    const box = document.getElementById("buttonBox");
 
     function moveNoButton() {
-        const maxX = card.clientWidth - noBtn.clientWidth - 10;
-        const maxY = card.clientHeight - noBtn.clientHeight - 10;
+        const maxX = box.clientWidth - noBtn.offsetWidth;
+        const maxY = box.clientHeight - noBtn.offsetHeight;
 
-        noBtn.style.left = Math.random() * maxX + "px";
-        noBtn.style.top = Math.random() * maxY + "px";
+        const x = Math.random() * maxX;
+        const y = Math.random() * maxY;
+
+        noBtn.style.left = `${x}px`;
+        noBtn.style.top = `${y}px`;
     }
 
     noBtn.addEventListener("mouseover", moveNoButton);
@@ -140,10 +131,7 @@
             <div class="love-page">
                 <img id="loveGif" src="${gifs[0]}">
                 <h2>Yayyy! 💍❤️</h2>
-                <p>
-                    You just made my heart the happiest place ever 🥹💖  
-                    Forever starts now… with you 💫
-                </p>
+                <p>Forever starts now… with you 💫</p>
             </div>
         `;
 
